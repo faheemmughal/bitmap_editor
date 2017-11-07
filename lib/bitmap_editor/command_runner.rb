@@ -3,7 +3,7 @@
 module BitmapEditor
   class CommandRunner
     MIN_COLUMNS = MIN_ROWS = 1
-    MAX_COLUMNS = MAX_ROWS = 255
+    MAX_COLUMNS = MAX_ROWS = 250
 
     def execute(command)
       case command
