@@ -25,9 +25,11 @@ RSpec.describe BitmapEditor::CommandRunner do
         expect(image).to be_nil
       end
 
-      it 'prints out that it did not create the image' do
-        expect { perform }
-          .to output("Can not create image of size 0, 0\n").to_stdout
+      it 'logs the issue and does not raise an error' do
+        expect(BitmapEditor::Log.instance)
+          .to receive(:error).with('Can not create image of size 0, 0')
+
+        expect { perform }.not_to raise_error
       end
     end
 
@@ -40,9 +42,11 @@ RSpec.describe BitmapEditor::CommandRunner do
         expect(image).to be_nil
       end
 
-      it 'prints out that it did not create the image' do
-        expect { perform }
-          .to output("Can not create image of size 300, 5\n").to_stdout
+      it 'logs the issue and does not raise an error' do
+        expect(BitmapEditor::Log.instance)
+          .to receive(:error).with('Can not create image of size 300, 5')
+
+        expect { perform }.not_to raise_error
       end
     end
 
@@ -50,14 +54,17 @@ RSpec.describe BitmapEditor::CommandRunner do
       [
         'I',
         'I 3',
+        'I 3 5b',
         'I 3 b',
         'I 3 5 5',
         'I a 5 5',
-        'I 5 5 c',
+        'I 5 5 c'
       ].each do |command|
-        it 'responds gracefully' do
-          expect { subject.execute(command) }
-            .to output("incorrect parameter size for create image command :(\n").to_stdout
+        it 'logs the issue and does not raise an error' do
+          expect(BitmapEditor::Log.instance)
+            .to receive(:error).with("unrecognised command: #{command}")
+
+          expect { subject.execute(command) }.not_to raise_error
         end
       end
     end
@@ -67,8 +74,11 @@ RSpec.describe BitmapEditor::CommandRunner do
     let(:command) { 'S' }
 
     context 'when there is no image present' do
-      it 'prints out the message' do
-        expect { perform }.to output("There is no image\n").to_stdout
+      it 'logs the issue and does not raise an error' do
+        expect(BitmapEditor::Log.instance)
+          .to receive(:error).with('There is no image present')
+
+        expect { perform }.not_to raise_error
       end
     end
 
@@ -92,8 +102,11 @@ RSpec.describe BitmapEditor::CommandRunner do
   describe 'Non-existing command' do
     let(:command) { 'DOES_NOT_EXIST' }
 
-    it 'responds gracefully' do
-      expect { perform }.to output("unrecognised command :(\n").to_stdout
+    it 'logs the issue and does not raise an error' do
+      expect(BitmapEditor::Log.instance)
+        .to receive(:error).with("unrecognised command: #{command}")
+
+      expect { subject.execute(command) }.not_to raise_error
     end
   end
 end

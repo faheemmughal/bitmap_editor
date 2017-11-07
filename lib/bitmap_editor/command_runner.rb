@@ -7,13 +7,14 @@ module BitmapEditor
 
     def execute(command)
       case command
-      when /^I/
-        parameter_hash = parse_for_create_image(command)
-        create_image(parameter_hash) if parameter_hash
+      when /^I (\d+) (\d+)$/
+        columns = Regexp.last_match(1).to_i
+        rows = Regexp.last_match(2).to_i
+        create_image(columns, rows)
       when 'S'
         print_image
       else
-        puts 'unrecognised command :('
+        Log.instance.error "unrecognised command: #{command}"
       end
     end
 
@@ -21,20 +22,9 @@ module BitmapEditor
 
     attr_accessor :image
 
-    def parse_for_create_image(command)
-      parameters = command.split(' ')
-      return puts 'incorrect parameter size for create image command :(' if parameters.size != 3
-
-      _command, columns, rows = parameters
-
-      { columns: Integer(columns, 10), rows: Integer(rows, 10) }
-    rescue ArgumentError
-      return puts 'incorrect parameter size for create image command :('
-    end
-
-    def create_image(columns:, rows:)
+    def create_image(columns, rows)
       unless valid_parameters_for_create?(columns, rows)
-        puts "Can not create image of size #{columns}, #{rows}"
+        Log.instance.error "Can not create image of size #{columns}, #{rows}"
         return
       end
 
@@ -43,7 +33,7 @@ module BitmapEditor
     end
 
     def print_image
-      return puts 'There is no image' unless image
+      return Log.instance.error 'There is no image present' unless image
 
       output = +''
       image.rows.times do |y|
