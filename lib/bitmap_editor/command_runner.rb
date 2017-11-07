@@ -2,6 +2,9 @@
 
 module BitmapEditor
   class CommandRunner
+    MIN_COLUMNS = MIN_ROWS = 1
+    MAX_COLUMNS = MAX_ROWS = 255
+
     def execute(command)
       case command
       when /^I/
@@ -21,6 +24,12 @@ module BitmapEditor
       _command, columns, rows = line.split(' ')
       columns = columns.to_i
       rows = rows.to_i
+
+      unless valid_attrbutes_for_create?(columns, rows)
+        puts "Can not create image of size #{columns}, #{rows}"
+        return
+      end
+
       # intialise to all white
       self.image = Image.new(columns, rows)
     end
@@ -36,6 +45,11 @@ module BitmapEditor
         output << "\n"
       end
       puts output
+    end
+
+    def valid_attrbutes_for_create?(columns, rows)
+      columns.between?(MIN_COLUMNS, MAX_COLUMNS) &&
+        rows.between?(MIN_ROWS, MAX_ROWS)
     end
   end
 end

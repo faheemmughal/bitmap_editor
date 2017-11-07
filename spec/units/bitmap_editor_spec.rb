@@ -23,22 +23,6 @@ RSpec.describe BitmapEditor do
       it 'writes correct output for the file' do
         expect { perform }.to output(correct_output).to_stdout
       end
-
-      context 'when no image was created' do
-        let(:file) { 'spec/fixtures/display_bitmap.txt' }
-
-        it 'writes correct output for the file' do
-          expect { perform }.to output("There is no image\n").to_stdout
-        end
-      end
-
-      context 'when file has incorrect command' do
-        let(:file) { 'spec/fixtures/incorrect_command.txt' }
-
-        it 'handles the command gracefully' do
-          expect { perform }.to output("unrecognised command :(\n").to_stdout
-        end
-      end
     end
 
     context 'when file is empty' do
