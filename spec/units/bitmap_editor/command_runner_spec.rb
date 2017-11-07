@@ -85,13 +85,14 @@ RSpec.describe BitmapEditor::CommandRunner do
     context 'when there is image' do
       let(:expected_output) do
         <<~OUTPUT
-          OOOOO
-          OOOOO
-          OOOOO
+          OOOOOO
+          OOOOOO
+          OOOOOO
+          OOOOOO
         OUTPUT
       end
 
-      before { subject.execute('I 5 3') }
+      before { subject.execute('I 6 4') }
 
       it 'displays the image correctly' do
         expect { perform }.to output(expected_output).to_stdout

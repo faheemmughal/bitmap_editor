@@ -35,14 +35,7 @@ module BitmapEditor
     def print_image
       return Log.instance.error 'There is no image present' unless image
 
-      output = +''
-      image.rows.times do |y|
-        image.columns.times do |x|
-          output << image.pixel_at(x, y)
-        end
-        output << "\n"
-      end
-      puts output
+      puts image.to_s
     end
 
     def valid_parameters_for_create?(columns, rows)
