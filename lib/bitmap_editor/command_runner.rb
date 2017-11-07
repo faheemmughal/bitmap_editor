@@ -8,7 +8,8 @@ module BitmapEditor
     def execute(command)
       case command
       when /^I/
-        create_image(command)
+        parameter_hash = parse_for_create_image(command)
+        create_image(parameter_hash) if parameter_hash
       when 'S'
         print_image
       else
@@ -20,12 +21,19 @@ module BitmapEditor
 
     attr_accessor :image
 
-    def create_image(line)
-      _command, columns, rows = line.split(' ')
-      columns = columns.to_i
-      rows = rows.to_i
+    def parse_for_create_image(command)
+      parameters = command.split(' ')
+      return puts 'incorrect parameter size for create image command :(' if parameters.size != 3
 
-      unless valid_attrbutes_for_create?(columns, rows)
+      _command, columns, rows = parameters
+
+      { columns: Integer(columns, 10), rows: Integer(rows, 10) }
+    rescue ArgumentError
+      return puts 'incorrect parameter size for create image command :('
+    end
+
+    def create_image(columns:, rows:)
+      unless valid_parameters_for_create?(columns, rows)
         puts "Can not create image of size #{columns}, #{rows}"
         return
       end
@@ -47,7 +55,7 @@ module BitmapEditor
       puts output
     end
 
-    def valid_attrbutes_for_create?(columns, rows)
+    def valid_parameters_for_create?(columns, rows)
       columns.between?(MIN_COLUMNS, MAX_COLUMNS) &&
         rows.between?(MIN_ROWS, MAX_ROWS)
     end

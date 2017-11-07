@@ -45,6 +45,22 @@ RSpec.describe BitmapEditor::CommandRunner do
           .to output("Can not create image of size 300, 5\n").to_stdout
       end
     end
+
+    context 'when image parameters are incorrect' do
+      [
+        'I',
+        'I 3',
+        'I 3 b',
+        'I 3 5 5',
+        'I a 5 5',
+        'I 5 5 c',
+      ].each do |command|
+        it 'responds gracefully' do
+          expect { subject.execute(command) }
+            .to output("incorrect parameter size for create image command :(\n").to_stdout
+        end
+      end
+    end
   end
 
   describe 'Show Image' do
