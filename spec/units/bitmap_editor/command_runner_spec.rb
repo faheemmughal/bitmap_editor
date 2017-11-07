@@ -7,12 +7,40 @@ RSpec.describe BitmapEditor::CommandRunner do
 
   describe 'Create Image' do
     context 'when image parameters are valid' do
-      let(:command) { 'I 4 20' }
+      # Parameters of the command are separated by white space*s*
+      [
+        'I 3 5',
+        'I 3  5',
+        'I   03 5',
+        "I         3\t5",
+        "I         3\t5\n"
+      ].each do |command|
+        it "when #{command}, parses and create correct sized image" do
+          expect(BitmapEditor::Log.instance).not_to receive(:error)
+          expect(BitmapEditor::Image).to receive(:new).with(3, 5)
+          subject.execute(command)
+        end
+      end
+    end
 
-      it 'creates and stores the image' do
-        perform
-        image = subject.send(:image)
-        expect(image).not_to be_nil
+    context 'when image parameters are incorrect' do
+      [
+        'I',
+        'I 3',
+        'I 3 5b',
+        'I 3 b',
+        'I35',
+        'I 35',
+        'I 3 5 5',
+        'I a 5 5',
+        'I 5 5 c'
+      ].each do |command|
+        it "when #{command}, logs the issue and does not raise an error" do
+          expect(BitmapEditor::Log.instance)
+            .to receive(:error).with("unrecognised command: #{command}")
+          expect(BitmapEditor::Image).not_to receive(:new)
+          expect { subject.execute(command) }.not_to raise_error
+        end
       end
     end
 
@@ -47,25 +75,6 @@ RSpec.describe BitmapEditor::CommandRunner do
           .to receive(:error).with('Can not create image of size 300, 5')
 
         expect { perform }.not_to raise_error
-      end
-    end
-
-    context 'when image parameters are incorrect' do
-      [
-        'I',
-        'I 3',
-        'I 3 5b',
-        'I 3 b',
-        'I 3 5 5',
-        'I a 5 5',
-        'I 5 5 c'
-      ].each do |command|
-        it 'logs the issue and does not raise an error' do
-          expect(BitmapEditor::Log.instance)
-            .to receive(:error).with("unrecognised command: #{command}")
-
-          expect { subject.execute(command) }.not_to raise_error
-        end
       end
     end
   end

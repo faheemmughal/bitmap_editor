@@ -7,7 +7,7 @@ module BitmapEditor
 
     def execute(command)
       case command
-      when /^I (\d+) (\d+)$/
+      when /^I\s+(\d+)\s+(\d+)$/
         columns = Regexp.last_match(1).to_i
         rows = Regexp.last_match(2).to_i
         create_image(columns, rows)
