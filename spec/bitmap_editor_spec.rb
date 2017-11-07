@@ -1,8 +1,9 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 RSpec.describe BitmapEditor do
-
-  describe '#run' do
+  describe '.run' do
     let(:perform) { subject.run(file) }
 
     context 'when valid file is provided' do
