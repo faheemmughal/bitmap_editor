@@ -25,6 +25,24 @@ RSpec.describe BitmapEditor do
       end
     end
 
+    context 'when using provided example' do
+      let(:file) { 'spec/fixtures/example.txt' }
+      let(:correct_output) do
+        <<~STRING
+          OOOOO
+          OOZZZ
+          AWOOO
+          OWOOO
+          OWOOO
+          OWOOO
+        STRING
+      end
+
+      it 'writes correct output for the file' do
+        expect { perform }.to output(correct_output).to_stdout
+      end
+    end
+
     context 'when file is empty' do
       let(:file) { 'spec/fixtures/empty_file.txt' }
 

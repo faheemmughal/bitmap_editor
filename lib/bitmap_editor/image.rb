@@ -66,8 +66,8 @@ module BitmapEditor
     def to_s
       output = +''
       # O(n^2) time
-      number_of_rows.times do |y|
-        number_of_columns.times do |x|
+      (1..number_of_rows).each do |y|
+        (1..number_of_columns).each do |x|
           output << pixel_at(x, y)
         end
         output << "\n"
@@ -84,8 +84,8 @@ module BitmapEditor
     end
 
     def valid_coordinate?(x, y)
-      x.between?(MIN_ROWS, number_of_columns) &&
-        y.between?(MIN_COLUMNS, number_of_rows)
+      x.between?(MIN_COLUMNS, number_of_columns) &&
+        y.between?(MIN_ROWS, number_of_rows)
     end
   end
 end
