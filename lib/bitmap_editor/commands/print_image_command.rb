@@ -15,11 +15,11 @@ module BitmapEditor
       {}
     end
 
-    # #run
+    # #execute
     # image is always the first parameter, whether its present or not
     # rest of the parameters are result of parsing
     # This method is expected to return image object
-    def run(image:)
+    def execute(image:)
       unless image
         Log.instance.error 'There is no image present'
         return

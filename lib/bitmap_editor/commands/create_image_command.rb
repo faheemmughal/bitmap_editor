@@ -17,11 +17,11 @@ module BitmapEditor
       { columns: columns, rows: rows }
     end
 
-    # #run
+    # #execute
     # image is always the first parameter, whether its present or not
     # rest of the parameters are result of parsing
     # This method is expected to return image object
-    def run(image:, columns:, rows:)
+    def execute(image:, columns:, rows:)
       create_image(columns, rows)
     end
 

@@ -19,7 +19,7 @@ module BitmapEditor
         parameters = command.parse(line)
         next unless parameters
 
-        self.image = command.run(parameters.merge(image: image))
+        self.image = command.execute(parameters.merge(image: image))
         true
       end
 
