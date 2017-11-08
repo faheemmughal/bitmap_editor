@@ -31,7 +31,6 @@ RSpec.describe BitmapEditor::Image do
       let(:params) { [1, 3, 6, 'X'] }
 
       it 'colours the pixel' do
-        # perform
         expect { perform }
           .to change { subject.pixel_at(1, 6) }
           .from('O').to('X')
@@ -39,6 +38,20 @@ RSpec.describe BitmapEditor::Image do
           .from('O').to('X')
           .and change { subject.pixel_at(3, 6) }
           .from('O').to('X')
+      end
+
+      context 'when x1 is greater than x2' do
+        let(:params) { [4, 2, 6, 'X'] }
+
+        it 'colours the pixel' do
+          expect { perform }
+            .to change { subject.pixel_at(2, 6) }
+            .from('O').to('X')
+            .and change { subject.pixel_at(3, 6) }
+            .from('O').to('X')
+            .and change { subject.pixel_at(4, 6) }
+            .from('O').to('X')
+        end
       end
     end
 
@@ -74,7 +87,6 @@ RSpec.describe BitmapEditor::Image do
       let(:params) { [3, 2, 6, 'X'] }
 
       it 'colours the pixel' do
-        # perform
         expect { perform }
           .to change { subject.pixel_at(3, 2) }
           .from('O').to('X')
@@ -84,6 +96,20 @@ RSpec.describe BitmapEditor::Image do
           .from('O').to('X')
           .and change { subject.pixel_at(3, 6) }
           .from('O').to('X')
+      end
+
+      context 'when y1 is greater than y2' do
+        let(:params) { [3, 5, 3, 'X'] }
+
+        it 'colours the pixel' do
+          expect { perform }
+            .to change { subject.pixel_at(3, 3) }
+            .from('O').to('X')
+            .and change { subject.pixel_at(3, 4) }
+            .from('O').to('X')
+            .and change { subject.pixel_at(3, 5) }
+            .from('O').to('X')
+        end
       end
     end
 

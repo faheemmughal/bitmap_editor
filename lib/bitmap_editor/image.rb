@@ -16,11 +16,9 @@ module BitmapEditor
     end
 
     def draw_horizontal(x1, x2, y, colour)
+      x1, x2 = [x1, x2].sort
       unless valid_coordinate?(x1, y) && valid_coordinate?(x2, y)
-        Log.instance.error "Coordinate (#{x1}, #{y}) or (#{x2}, #{y}) are out \
-          of bounds for image of with max coordinates \
-          (#{number_of_columns}, #{number_of_rows})"
-          .squeeze(' ')
+        log_coordinates_out_of_bound([x1, y], [x2, y])
         return
       end
 
@@ -30,11 +28,9 @@ module BitmapEditor
     end
 
     def draw_vertical(x, y1, y2, colour)
+      y1, y2 = [y1, y2].sort
       unless valid_coordinate?(x, y1) && valid_coordinate?(x, y2)
-        Log.instance.error "Coordinate (#{x}, #{y1}) or (#{x}, #{y2}) are out \
-          of bounds for image of with max coordinates \
-          (#{number_of_columns}, #{number_of_rows})"
-          .squeeze(' ')
+        log_coordinates_out_of_bound([x, y1], [x, y2])
         return
       end
 
@@ -86,6 +82,13 @@ module BitmapEditor
     def valid_coordinate?(x, y)
       x.between?(MIN_COLUMNS, number_of_columns) &&
         y.between?(MIN_ROWS, number_of_rows)
+    end
+
+    def log_coordinates_out_of_bound(coordinate1, coordinate2)
+      Log.instance.error "Coordinate (#{coordinate1[0]}, #{coordinate1[1]}) or \
+        (#{coordinate2[0]}, #{coordinate2[1]}) are out of bounds for image of \
+        with max coordinates (#{number_of_columns}, #{number_of_rows})"
+        .squeeze(' ')
     end
   end
 end
