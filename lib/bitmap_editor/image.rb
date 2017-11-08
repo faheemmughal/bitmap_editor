@@ -15,6 +15,20 @@ module BitmapEditor
       self.bitmap = generate_white_bitmap
     end
 
+    def draw_horizontal(x1, x2, y, colour)
+      unless valid_coordinate?(x1, y) && valid_coordinate?(x2, y)
+        Log.instance.error "Coordinate (#{x1}, #{y}) or (#{x2}, #{y}) are out \
+          of bounds for image of with max coordinates \
+          (#{number_of_columns}, #{number_of_rows})"
+          .squeeze(' ')
+        return
+      end
+
+      (x1..x2).each do |x|
+        bitmap[x - 1][y - 1] = colour
+      end
+    end
+
     def draw_vertical(x, y1, y2, colour)
       unless valid_coordinate?(x, y1) && valid_coordinate?(x, y2)
         Log.instance.error "Coordinate (#{x}, #{y1}) or (#{x}, #{y2}) are out \

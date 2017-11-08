@@ -7,6 +7,7 @@ module BitmapEditor
         ClearImageCommand.new,
         ColourPixelCommand.new,
         CreateImageCommand.new,
+        DrawHorizontalLineCommand.new,
         DrawVerticalLineCommand.new,
         PrintImageCommand.new
       ]
