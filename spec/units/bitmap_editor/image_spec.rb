@@ -49,14 +49,15 @@ RSpec.describe BitmapEditor::Image do
   end
 
   describe '#colour' do
-    let(:perform) { subject.colour(*params)}
+    let(:perform) { subject.colour(*params) }
 
     context 'when pixel is within bounds' do
       let(:params) { [3, 2, 'X'] }
 
       it 'colours the pixel' do
         expect(BitmapEditor::Log.instance).not_to receive(:error)
-        expect { perform }.to change { subject.pixel_at(3, 2) }.from('O').to('X')
+        expect { perform }.to change { subject.pixel_at(3, 2) }
+          .from('O').to('X')
       end
     end
 
