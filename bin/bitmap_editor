@@ -1,8 +1,10 @@
 #!/usr/bin/env ruby
-require './lib/bitmap_editor'
+$LOAD_PATH.unshift('./lib')
+
+require 'bitmap_editor'
 
 # Configured just for dev environment only at the moment
 # Can add more files once we have multiple environments
 ENV['LOG_FILE'] ||= 'log/development.log'
 
-BitmapEditor.new.run ARGV.first
+BitmapEditor.run ARGV.first

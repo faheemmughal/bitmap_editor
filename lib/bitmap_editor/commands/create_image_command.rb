@@ -18,9 +18,9 @@ module BitmapEditor
     end
 
     # #execute
-    # image is always the first parameter, whether its present or not
+    # image is always passed, whether it is present or not
     # rest of the parameters are result of parsing
-    # This method is expected to return image object
+    # This method is expected to return an image object
     def execute(image:, columns:, rows:)
       create_image(columns, rows)
     end

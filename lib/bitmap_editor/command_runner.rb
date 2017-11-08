@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
-
 module BitmapEditor
   class CommandRunner
-
     def initialize
       @commands = [
         ClearImageCommand.new,
@@ -14,7 +12,7 @@ module BitmapEditor
     end
 
     def execute(line)
-      # executes first parsed command
+      # executes first successfully parsed command
       success = commands.find do |command|
         parameters = command.parse(line)
         next unless parameters
