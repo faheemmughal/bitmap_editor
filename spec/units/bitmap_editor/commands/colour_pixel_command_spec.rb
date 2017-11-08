@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe BitmapEditor::ColourImageCommand do
+RSpec.describe BitmapEditor::ColourPixelCommand do
   describe '#parse' do
     context 'when command parameters are valid' do
       # Parameters of the command are separated by white space*s*

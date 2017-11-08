@@ -4,8 +4,9 @@ require 'bitmap_editor/command_runner'
 require 'bitmap_editor/image'
 require 'bitmap_editor/log'
 require 'bitmap_editor/commands/clear_image_command'
-require 'bitmap_editor/commands/colour_image_command'
+require 'bitmap_editor/commands/colour_pixel_command'
 require 'bitmap_editor/commands/create_image_command'
+require 'bitmap_editor/commands/draw_vertical_line_command'
 require 'bitmap_editor/commands/print_image_command'
 
 module BitmapEditor

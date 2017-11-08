@@ -3,6 +3,7 @@
 module BitmapEditor
   class ClearImageCommand
     # Command:  C
+    # Clears the table, setting all pixels to white (O)
 
     # #parse
     # line is passed in as parameter

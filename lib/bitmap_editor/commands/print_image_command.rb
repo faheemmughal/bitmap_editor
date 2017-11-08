@@ -3,6 +3,7 @@
 module BitmapEditor
   class PrintImageCommand
     # Command:  S
+    # Show the contents of the current image
 
     # #parse
     # line is passed in as parameter

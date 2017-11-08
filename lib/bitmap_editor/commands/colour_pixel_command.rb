@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 module BitmapEditor
-  class ColourImageCommand
+  class ColourPixelCommand
     # Command:  L X Y C
+    # Colours the pixel (X,Y) with colour C
 
     # #parse
     # line is passed in as parameter
@@ -18,7 +19,7 @@ module BitmapEditor
     end
 
     # #execute
-    # image is always passed, whether it is present or not
+    # image is always passed, whether its present or not
     # rest of the parameters are result of parsing
     # This method is expected to return an image object
     def execute(image:, x:, y:, colour:)

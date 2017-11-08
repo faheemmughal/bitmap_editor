@@ -5,8 +5,9 @@ module BitmapEditor
     def initialize
       @commands = [
         ClearImageCommand.new,
-        ColourImageCommand.new,
+        ColourPixelCommand.new,
         CreateImageCommand.new,
+        DrawVerticalLineCommand.new,
         PrintImageCommand.new
       ]
     end

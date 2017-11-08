@@ -24,6 +24,51 @@ RSpec.describe BitmapEditor::Image do
     end
   end
 
+  describe '#draw_vertical' do
+    let(:perform) { subject.draw_vertical(*params) }
+
+    context 'when pixel is within bounds' do
+      let(:params) { [3, 2, 6, 'X'] }
+
+      it 'colours the pixel' do
+        # perform
+        expect { perform }
+          .to change { subject.pixel_at(3, 2) }
+          .from('O').to('X')
+          .and change { subject.pixel_at(3, 3) }
+          .from('O').to('X')
+          .and change { subject.pixel_at(3, 4) }
+          .from('O').to('X')
+          .and change { subject.pixel_at(3, 6) }
+          .from('O').to('X')
+      end
+    end
+
+    context 'when pixel is out of max bounds' do
+      let(:params) { [3, 2, 8, 'X'] }
+
+      it 'logs the error and continues' do
+        expect(BitmapEditor::Log.instance)
+          .to receive(:error)
+          .with("Coordinate (3, 2) or (3, 8) are out of bounds for image of \
+            with max coordinates (4, 6)".squeeze(' '))
+        expect { perform }.not_to raise_error
+      end
+    end
+
+    context 'when pixel is out of min bounds' do
+      let(:params) { [0, 3, 6, 'X'] }
+
+      it 'logs the error and continues' do
+        expect(BitmapEditor::Log.instance)
+          .to receive(:error)
+          .with("Coordinate (0, 3) or (0, 6) are out of bounds for image of \
+            with max coordinates (4, 6)".squeeze(' '))
+        expect { perform }.not_to raise_error
+      end
+    end
+  end
+
   describe '#clear' do
     let(:expected_output) do
       <<~STRING

@@ -3,6 +3,7 @@
 module BitmapEditor
   class CreateImageCommand
     # Command: I M N
+    # Create a new M x N image with all pixels coloured white (O).
 
     # #parse
     # line is passed in as parameter
